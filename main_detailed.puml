@@ -1,0 +1,10 @@
+@startuml
+
+!include wayland_diagram.puml
+!include surfaces_diagram.puml
+!include screen_connector_objects_diagram.puml
+!include screen_connector_separate_diagram.puml
+!include streaming_diagram.puml
+
+@enduml
+

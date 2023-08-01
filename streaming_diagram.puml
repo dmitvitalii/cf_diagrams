@@ -1,0 +1,41 @@
+@startuml
+
+class WebRtcScProcessedFrame {
+  - buf_: std::unique_ptr<CvdVideoFrameBuffer>
+  + Clone(): std::unique_ptr<WebRtcScProcessedFrame>
+}
+
+class DisplayHandler {
+  - display_sinks_: std::map<uint32_t, std::shared_ptr<webrtc_streaming::VideoSink>>
+  - streamer_: webrtc_streaming::Streamer&
+  - screen_connector_: ScreenConnector<WebRtcScProcessedFrame>&
+  - last_buffer_: std::shared_ptr<webrtc_streaming::VideoFrameBuffer>
+  - last_buffer_display_: std::uint32_t
+  - last_buffer_mutex_: std::mutex
+  - next_frame_mutex_: std::mutex
+  + DisplayHandler(streamer: webrtc_streaming::Streamer&, screen_connector: ScreenConnector<WebRtcScProcessedFrame>&)
+  + Loop(): void
+  + SendLastFrame(): void
+  - GetScreenConnectorCallback(): GenerateProcessedFrameCallback
+}
+
+struct ScreenConnectorFrameInfo {
+  + display_number_: std::uint32_t
+  + is_success_: bool
+}
+
+class Streamer
+
+class CvdVideoFrameBuffer
+
+WebRtcScProcessedFrame <.. ScreenConnectorFrameInfo
+
+WebRtcScProcessedFrame -- CvdVideoFrameBuffer
+WebRtcScProcessedFrame -- CvdVideoFrameBuffer
+
+DisplayHandler -- Streamer
+DisplayHandler -- ScreenConnector
+DisplayHandler -- WebRtcScProcessedFrame
+
+@enduml
+

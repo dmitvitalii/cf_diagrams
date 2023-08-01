@@ -1,0 +1,50 @@
+@startuml surfaces_diagram
+
+class Surface {
+  + Surface(surfaces: Surfaces&)
+  + ~Surface()
+  + SetRegion(region: Region)
+  + Attach(buffer: wl_resource*)
+  + Commit()
+  + SetVirtioGpuScanoutId(scanout: uint32_t)
+
+  - surfaces_: Surfaces&
+  - state_mutex_: std::mutex
+  - state_: State
+
+}
+
+class Region {
+  + x: int32_t
+  + y: int32_t
+  + w: int32_t
+  + h: int32_t
+}
+
+class VirtioGpuMetadata {
+  + scanout_id: std::optional<uint32_t>
+}
+
+class State {
+  + current_frame_number: uint32_t
+  + current_buffer: struct wl_resource*
+  + pending_buffer: struct wl_resource*
+  + region: Region
+  + virtio_gpu_metadata_: VirtioGpuMetadata
+  + has_notified_surface_create: bool
+}
+
+
+Surface ..> Surfaces
+Surface o-- State
+
+State o-- Region
+State o-- VirtioGpuMetadata
+
+Surface +-- Region
+Surface +-- VirtioGpuMetadata
+Surface +-- State
+
+
+@enduml
+

@@ -1,0 +1,60 @@
+@startuml
+
+class WaylandScreenConnector {
+  -server_: WaylandServer*
+  +WaylandScreenConnector(ANNOTATED(FramesFd, int) frames_fd)
+  +SetFrameCallback(GenerateProcessedFrameCallbackImpl frame_callback)
+  +SetDisplayEventCallback(DisplayEventCallback event_callback)
+}
+
+class WaylandServer {
+  +WaylandServer(int wayland_fd)
+  +SetFrameCallback(callback: GenerateProcessedFrameCallbackImpl)
+  +SetDisplayEventCallback(callback: DisplayEventCallback)
+}
+
+class ScreenConnector<ProcessedFrameType> {
+  -sc_android_src_: WaylandScreenConnector
+  -host_mode_ctrl_: HostModeCtrl
+  -on_next_frame_cnt_: unsigned long long int
+  -render_confui_cnt_: unsigned long long int
+  -sc_frame_multiplexer_: FrameMultiplexer
+  -callback_from_streamer_: GenerateProcessedFrameCallback
+  -streamer_callback_mutex_: std::mutex
+  -streamer_callback_set_cv_: std::condition_variable
+  +ScreenConnector(WaylandScreenConnector& sc_android_src, HostModeCtrl& host_mode_ctrl)
+  +SetCallback(GenerateProcessedFrameCallback&& frame_callback)
+  +IsCallbackSet() const
+  +SetDisplayEventCallback(DisplayEventCallback event_callback)
+  +OnNextFrame()
+  +RenderConfirmationUi(...)
+}
+
+class ScreenConnectorInputMultiplexer<ProcessedFrameType> {
+  - host_mode_ctrl_: HostModeCtrl
+  - multiplexer_: Multiplexer<ProcessedFrameType, Queue>
+  - on_next_frame_cnt_: unsigned long long int
+  - sc_android_queue_id_: int
+  - sc_confui_queue_id_: int
+  + PushToAndroidQueue(item: ProcessedFrameType)
+  + PushToConfUiQueue(item: ProcessedFrameType)
+  + Pop(): ProcessedFrameType
+}
+
+
+ScreenConnector ..|> ScreenConnectorInfo
+ScreenConnector ..|> ScreenConnectorFrameRenderer
+
+ScreenConnector *-- ScreenConnectorInputMultiplexer : referred as FrameMultiplexer >
+
+ScreenConnector *-- WaylandScreenConnector : Uses >
+
+WaylandScreenConnector -- WaylandServer : Contains
+
+ScreenConnector -- WaylandScreenConnector : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
+WaylandScreenConnector -- WaylandServer : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
+WaylandServer -- WaylandServerState : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
+WaylandServerState -- Surfaces : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
+
+@enduml
+
