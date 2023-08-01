@@ -3,6 +3,7 @@
 !include wayland_diagram.puml
 !include surfaces_diagram.puml
 !include screen_connector_diagram.puml
+!include compositor.puml
 
 @enduml
 
