@@ -40,6 +40,7 @@ class ScreenConnectorInputMultiplexer<ProcessedFrameType> {
   + PushToConfUiQueue(item: ProcessedFrameType)
   + Pop(): ProcessedFrameType
 }
+note top of ScreenConnectorInputMultiplexer: Combines Android and ConfUI frames\nto Stream everything to a user as a single picture
 
 ScreenConnector *-- ScreenConnectorInputMultiplexer : referred as FrameMultiplexer >
 
