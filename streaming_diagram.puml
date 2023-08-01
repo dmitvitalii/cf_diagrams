@@ -13,7 +13,7 @@ class DisplayHandler {
   - last_buffer_display_: std::uint32_t
   - last_buffer_mutex_: std::mutex
   - next_frame_mutex_: std::mutex
-  + DisplayHandler(webrtc_streaming::Streamer&, ScreenConnector<WebRtcScProcessedFrame>&)
+  + DisplayHandler(<color:LightSlateGray>webrtc_streaming::Streamer&, ScreenConnector<WebRtcScProcessedFrame>&</color>)
   + Loop(): void
   + SendLastFrame(): void
   - GetScreenConnectorCallback(): GenerateProcessedFrameCallback
@@ -24,13 +24,126 @@ struct ScreenConnectorFrameInfo {
   + is_success_: bool
 }
 
-class Streamer
+class OperatorObserver {
+  +OnRegistered(): void
+  +OnClose(): void
+  +OnError(): void
+}
 
-class CvdVideoFrameBuffer
+struct StreamerConfig {
+  - device_id: std::string
+  - group_id: std::string
+  - client_files_port: int
+  - operator_server: ServerConfig
+  - udp_port_range: std::pair<uint16_t, uint16_t>
+  - tcp_port_range: std::pair<uint16_t, uint16_t>
+  - openwrt_device_id: std::string
+  - openwrt_addr: std::string
+  - control_env_proxy_server_path: std::string
+}
+
+class Streamer {
+  +Create(<color:LightSlateGray>StreamerConfig, LocalRecorder*, std::shared_ptr<ConnectionObserverFactory></color>): std::unique_ptr<Streamer>
+  +AddDisplay(<color:LightSlateGray>std::string, int, int, int, bool</color>): std::shared_ptr<VideoSink>
+  +RemoveDisplay(<color:LightSlateGray>std::string</color>): bool
+  +SetHardwareSpec(<color:LightSlateGray>std::string, std::string</color>): void
+  +SetHardwareSpec<V>(<color:LightSlateGray>std::string, V</color>): void
+  +AddAudioStream(<color:LightSlateGray>std::string</color>): std::shared_ptr<AudioSink>
+  +GetAudioSource(): std::shared_ptr<AudioSource>
+  +AddCamera(<color:LightSlateGray>unsigned int, unsigned int</color>): CameraController*
+  +AddCustomControlPanelButton(<color:LightSlateGray>std::string, std::string, std::string</color>): void
+  +AddCustomControlPanelButtonWithShellCommand(<color:LightSlateGray>std::string, std::string, std::string, std::string</color>): void
+  +AddCustomControlPanelButtonWithDeviceStates(<color:LightSlateGray>std::string, std::string, std::string, std::vector<DeviceState></color>): void
+  +Register(<color:LightSlateGray>std::weak_ptr<OperatorObserver></color>): void
+  +Unregister(): void
+  -impl: Streamer::Impl
+}
+
+
+class Streamer::Impl {
+  +CreateClientHandler(<color:LightSlateGray>int</color>): std::shared_ptr<ClientHandler>
+  +Register(<color:LightSlateGray>std::weak_ptr<OperatorObserver></color>): void
+  +SendMessageToClient(<color:LightSlateGray>int, const Json::Value&</color>): void
+  +DestroyClientHandler(<color:LightSlateGray>int</color>): void
+  +SetupCameraForClient(<color:LightSlateGray>int</color>): void
+  +OnOpen(): void
+  +OnClose(): void
+  +OnError(<color:LightSlateGray>const std::string&</color>): void
+  +OnReceive(<color:LightSlateGray>const uint8_t*, size_t, bool</color>): void
+  +HandleConfigMessage(<color:LightSlateGray>const Json::Value&</color>): void
+  +HandleClientMessage(<color:LightSlateGray>const Json::Value&</color>): void
+  +Build(<color:LightSlateGray>webrtc::PeerConnectionObserver&, const std::vector<webrtc::PeerConnectionInterface::IceServer>&</color>): Result<rtc::scoped_refptr<webrtc::PeerConnectionInterface>>
+  - config_: StreamerConfig
+  - operator_config_: OperatorServerConfig
+  - server_connection_: std::unique_ptr<ServerConnection>
+  - connection_observer_factory_: std::shared_ptr<ConnectionObserverFactory>
+  - peer_connection_factory_: rtc::scoped_refptr<webrtc::PeerConnectionFactoryInterface>
+  - network_thread_: std::unique_ptr<rtc::Thread>
+  - worker_thread_: std::unique_ptr<rtc::Thread>
+  - signal_thread_: std::unique_ptr<rtc::Thread>
+  - displays_: std::map<std::string, DisplayDescriptor>
+  - audio_sources_: std::map<std::string, rtc::scoped_refptr<AudioTrackSourceImpl>>
+  - clients_: std::map<int, std::shared_ptr<ClientHandler>>
+  - operator_observer_: std::weak_ptr<OperatorObserver>
+  - hardware_: std::map<std::string, std::string>
+  - custom_control_panel_buttons_: std::vector<ControlPanelButtonDescriptor>
+  - audio_device_module_: std::shared_ptr<AudioDeviceModuleWrapper>
+  - camera_streamer_: std::unique_ptr<CameraStreamer>
+  - registration_retries_left_: int
+  - retry_interval_ms_: int
+  - recorder_: LocalRecorder*
+}
+
+
+class CvdVideoFrameBuffer {
+  +CvdVideoFrameBuffer(<color:LightSlateGray>width: int, height: int</color>)
+  +~CvdVideoFrameBuffer()
+  +width(): int
+  +height(): int
+  +StrideY(): int
+  +StrideU(): int
+  +StrideV(): int
+  +DataY(): const uint8_t*
+  +DataU(): const uint8_t*
+  +DataV(): const uint8_t*
+  +DataY(): uint8_t*
+  +DataU(): uint8_t*
+  +DataV(): uint8_t*
+
+  - width_: const int
+  - height_: const int
+  - y_: std::vector<std::uint8_t>
+  - u_: std::vector<std::uint8_t>
+  - v_: std::vector<std::uint8_t>
+}
+
+struct ServerConfig {
+  +addr: std::string
+  +port: int
+  +path: std::string
+  +security: Security
+}
+
+enum Security {
+  +kInsecure
+  +kAllowSelfSigned
+  +kStrict
+}
+
+ServerConfig o-- Security
+ServerConfig +-- Security
+
+
+' Relationships
+Streamer::Impl o-- StreamerConfig
+
+StreamerConfig -- ServerConfig
+
+Streamer::Impl -- OperatorObserver
+Streamer *-- Streamer::Impl
 
 WebRtcScProcessedFrame <.. ScreenConnectorFrameInfo
 
-WebRtcScProcessedFrame -- CvdVideoFrameBuffer
 WebRtcScProcessedFrame -- CvdVideoFrameBuffer
 
 DisplayHandler -- Streamer
