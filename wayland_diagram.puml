@@ -2,16 +2,16 @@
 
 class Surfaces {
   + Surfaces()
-  + SetFrameCallback(callback: FrameCallback)
-  + SetDisplayEventCallback(callback: DisplayEventCallback)
+  + SetFrameCallback(<color:LightSlateGray>callback: FrameCallback</color>)
+  + SetDisplayEventCallback(<color:LightSlateGray>callback: DisplayEventCallback</color>)
 
   - callback_mutex_: std::mutex
   - callback_: std::optional<FrameCallback>
   - event_callback_: std::optional<DisplayEventCallback>
 
-  - HandleSurfaceFrame(...)
-  - HandleSurfaceCreated(...)
-  - HandleSurfaceDestroyed(...)
+  - HandleSurfaceFrame(<color:LightSlateGray>...</color>)
+  - HandleSurfaceCreated(<color:LightSlateGray>...</color>)
+  - HandleSurfaceDestroyed(<color:LightSlateGray>...</color>)
 }
 
 
@@ -21,15 +21,15 @@ class WaylandServer {
   -server_ready_cv_: std::condition_variable
   -server_thread_: std::thread
   -server_state_: std::unique_ptr<internal::WaylandServerState>
-  +WaylandServer(wayland_socket_fd: int)
+  +WaylandServer(<color:LightSlateGray>wayland_socket_fd: int</color>)
   +~WaylandServer()
-  +SetFrameCallback(callback: Surfaces::FrameCallback)
-  +SetDisplayEventCallback(callback: DisplayEventCallback)
-  +ServerLoop(fd: int)
+  +SetFrameCallback(<color:LightSlateGray>callback: Surfaces::FrameCallback</color>)
+  +SetDisplayEventCallback(<color:LightSlateGray>callback: DisplayEventCallback</color>)
+  +ServerLoop(<color:LightSlateGray>fd: int</color>)
 }
 
 stereotype FrameCallback {
-  +operator()(...)
+  +operator()(<color:LightSlateGray>...</color>)
 }
 note top of FrameCallback: using FrameCallback = std::function<void(\n    std::uint32_t /*display_number*/,\n    std::uint32_t /*frame_width*/,\n    std::uint32_t /*frame_height*/,\n    std::uint32_t /*frame_stride_bytes*/,\n    std::uint8_t* /*frame_bytes*/\n)>;
 
@@ -45,7 +45,7 @@ struct DisplayDestroyedEvent {
 }
 
 stereotype DisplayEventCallback<DisplayEvent = [DisplayCreatedEvent | DisplayDestroyedEvent] > {
-  +operator()(event: const DisplayEvent&)
+  +operator()(<color:LightSlateGray>event: const DisplayEvent&</color>)
 }
  
 
@@ -68,4 +68,3 @@ DisplayEventCallback -- DisplayCreatedEvent
 DisplayEventCallback -- DisplayDestroyedEvent
 
 @enduml
-

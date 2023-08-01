@@ -1,12 +1,12 @@
 @startuml surfaces_diagram
 
 class Surface {
-  + Surface(surfaces: Surfaces&)
+  + Surface(<color:LightSlateGray>surfaces: Surfaces&</color>)
   + ~Surface()
-  + SetRegion(region: Region)
-  + Attach(buffer: wl_resource*)
+  + SetRegion(<color:LightSlateGray>region: Region</color>)
+  + Attach(<color:LightSlateGray>buffer: wl_resource*</color>)
   + Commit()
-  + SetVirtioGpuScanoutId(scanout: uint32_t)
+  + SetVirtioGpuScanoutId(<color:LightSlateGray>scanout: uint32_t</color>)
 
   - surfaces_: Surfaces&
   - state_mutex_: std::mutex

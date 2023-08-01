@@ -2,15 +2,16 @@
 
 class WaylandScreenConnector {
   -server_: WaylandServer*
-  +WaylandScreenConnector(ANNOTATED(FramesFd, int) frames_fd)
-  +SetFrameCallback(frame_callback: GenerateProcessedFrameCallbackImpl)
-  +SetDisplayEventCallback(event_callback: DisplayEventCallback)
+  +WaylandScreenConnector(<color:LightSlateGray>ANNOTATED(FramesFd, int) frames_fd</color>)
+  +SetFrameCallback(<color:LightSlateGray>frame_callback: GenerateProcessedFrameCallbackImpl</color>)
+  +SetDisplayEventCallback(<color:LightSlateGray>event_callback: DisplayEventCallback</color>)
 }
 
+' todo remove
 class WaylandServer {
-  +WaylandServer(int wayland_fd)
-  +SetFrameCallback(callback: GenerateProcessedFrameCallbackImpl)
-  +SetDisplayEventCallback(callback: DisplayEventCallback)
+  +WaylandServer(<color:LightSlateGray>int wayland_fd</color>)
+  +SetFrameCallback(<color:LightSlateGray>callback: GenerateProcessedFrameCallbackImpl</color>)
+  +SetDisplayEventCallback(<color:LightSlateGray>callback: DisplayEventCallback</color>)
 }
 
 class ScreenConnector<ProcessedFrameType> {
@@ -22,12 +23,12 @@ class ScreenConnector<ProcessedFrameType> {
   -callback_from_streamer_: GenerateProcessedFrameCallback
   -streamer_callback_mutex_: std::mutex
   -streamer_callback_set_cv_: std::condition_variable
-  +ScreenConnector(WaylandScreenConnector&, HostModeCtrl&)
-  +SetCallback(frame_callback: GenerateProcessedFrameCallback&&)
+  +ScreenConnector(<color:LightSlateGray>WaylandScreenConnector&, HostModeCtrl&</color>)
+  +SetCallback(<color:LightSlateGray>frame_callback: GenerateProcessedFrameCallback&&</color>)
   +IsCallbackSet() const
-  +SetDisplayEventCallback(event_callback: DisplayEventCallback)
+  +SetDisplayEventCallback(<color:LightSlateGray>event_callback: DisplayEventCallback</color>)
   +OnNextFrame()
-  +RenderConfirmationUi(uint32_t, uint32_t, uint32_t, uint32_t,std::uint8_t*)
+  +RenderConfirmationUi(<color:LightSlateGray>uint32_t, uint32_t, uint32_t, uint32_t,std::uint8_t*</color>)
 }
 
 class ScreenConnectorInputMultiplexer<ProcessedFrameType> {
@@ -36,8 +37,8 @@ class ScreenConnectorInputMultiplexer<ProcessedFrameType> {
   - on_next_frame_cnt_: unsigned long long int
   - sc_android_queue_id_: int
   - sc_confui_queue_id_: int
-  + PushToAndroidQueue(item: ProcessedFrameType)
-  + PushToConfUiQueue(item: ProcessedFrameType)
+  + PushToAndroidQueue(<color:LightSlateGray>item: ProcessedFrameType</color>)
+  + PushToConfUiQueue(<color:LightSlateGray>item: ProcessedFrameType</color>)
   + Pop(): ProcessedFrameType
 }
 note top of ScreenConnectorInputMultiplexer: Combines Android and ConfUI frames\nto Stream everything to a user as a single picture
