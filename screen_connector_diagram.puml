@@ -47,14 +47,8 @@ ScreenConnector ..|> ScreenConnectorFrameRenderer
 
 ScreenConnector *-- ScreenConnectorInputMultiplexer : referred as FrameMultiplexer >
 
-ScreenConnector *-- WaylandScreenConnector : Uses >
-
-WaylandScreenConnector -- WaylandServer : Contains
-
-ScreenConnector -- WaylandScreenConnector : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
-WaylandScreenConnector -- WaylandServer : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
-WaylandServer -- WaylandServerState : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
-WaylandServerState -- Surfaces : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
+ScreenConnector *-- WaylandScreenConnector : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
+WaylandScreenConnector *-- WaylandServer : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
 
 @enduml
 

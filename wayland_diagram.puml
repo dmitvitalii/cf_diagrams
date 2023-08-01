@@ -55,12 +55,13 @@ class WaylandServerState {
 }
 
 
-WaylandServer o-- WaylandServerState
-WaylandServerState ..> Surfaces
+WaylandServer o-- WaylandServerState : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
+WaylandServerState ..> Surfaces : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
+
 WaylandServerState ..> wl_display
 
-Surfaces "1" --> "0..1" FrameCallback
-Surfaces "1" --> "0..1" DisplayEventCallback
+Surfaces "1" o-- "0..1" FrameCallback
+Surfaces "1" o-- "0..1" DisplayEventCallback
 
 
 DisplayEventCallback -- DisplayCreatedEvent 
