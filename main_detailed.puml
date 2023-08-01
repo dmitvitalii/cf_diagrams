@@ -1,9 +1,11 @@
 @startuml
 
+
+scale 0.75
+
 !include streaming_diagram.puml
 !include surfaces_diagram.puml
 !include screen_connector_diagram.puml
-!include screen_connector_objects_diagram.puml
 !include wayland_compositor.puml
 !include wayland_server_diagram.puml
 
