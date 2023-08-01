@@ -1,19 +1,5 @@
 @startuml
 
-class WaylandScreenConnector {
-  -server_: WaylandServer*
-  +WaylandScreenConnector(<color:LightSlateGray>ANNOTATED(FramesFd, int) frames_fd</color>)
-  +SetFrameCallback(<color:LightSlateGray>frame_callback: GenerateProcessedFrameCallbackImpl</color>)
-  +SetDisplayEventCallback(<color:LightSlateGray>event_callback: DisplayEventCallback</color>)
-}
-
-' todo remove
-class WaylandServer {
-  +WaylandServer(<color:LightSlateGray>int wayland_fd</color>)
-  +SetFrameCallback(<color:LightSlateGray>callback: GenerateProcessedFrameCallbackImpl</color>)
-  +SetDisplayEventCallback(<color:LightSlateGray>callback: DisplayEventCallback</color>)
-}
-
 class ScreenConnector<ProcessedFrameType> {
   -sc_android_src_: WaylandScreenConnector
   -host_mode_ctrl_: HostModeCtrl
@@ -46,7 +32,6 @@ note top of ScreenConnectorInputMultiplexer: Combines Android and ConfUI frames\
 ScreenConnector *-- ScreenConnectorInputMultiplexer : referred as FrameMultiplexer >
 
 ScreenConnector *-- WaylandScreenConnector : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
-WaylandScreenConnector *-- WaylandServer : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
 
 @enduml
 
