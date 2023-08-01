@@ -13,7 +13,7 @@ class DisplayHandler {
   - last_buffer_display_: std::uint32_t
   - last_buffer_mutex_: std::mutex
   - next_frame_mutex_: std::mutex
-  + DisplayHandler(streamer: webrtc_streaming::Streamer&, screen_connector: ScreenConnector<WebRtcScProcessedFrame>&)
+  + DisplayHandler(webrtc_streaming::Streamer&, ScreenConnector<WebRtcScProcessedFrame>&)
   + Loop(): void
   + SendLastFrame(): void
   - GetScreenConnectorCallback(): GenerateProcessedFrameCallback

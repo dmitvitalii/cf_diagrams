@@ -2,60 +2,59 @@
 
 package wayland_server_protocol {
 
-
 struct wl_surface_interface {
-    + destroy(client: wl_client, resource: wl_resource): void
-    + attach(client: wl_client, resource: wl_resource, buffer: wl_resource, x: int32_t, y: int32_t): void
-    + damage(client: wl_client, resource: wl_resource, x: int32_t, y: int32_t, width: int32_t, height: int32_t): void
-    + frame(client: wl_client, resource: wl_resource, callback: uint32_t): void
-    + set_opaque_region(client: wl_client, resource: wl_resource, region: wl_resource): void
-    + set_input_region(client: wl_client, resource: wl_resource, region: wl_resource): void
-    + commit(client: wl_client, resource: wl_resource): void
-    + set_buffer_transform(client: wl_client, resource: wl_resource, transform: int32_t): void
-    + set_buffer_scale(client: wl_client, resource: wl_resource, scale: int32_t): void
-    + damage_buffer(client: wl_client, resource: wl_resource, x: int32_t, y: int32_t, width: int32_t, height: int32_t): void
+    + destroy(wl_client, wl_resource): void
+    + attach(wl_client, wl_resource, wl_resource, int32_t, int32_t): void
+    + damage(wl_client, wl_resource, int32_t, int32_t, int32_t, int32_t): void
+    + frame(wl_client, wl_resource, uint32_t): void
+    + set_opaque_region(wl_client, wl_resource, wl_resource): void
+    + set_input_region(wl_client, wl_resource, wl_resource): void
+    + commit(wl_client, wl_resource): void
+    + set_buffer_transform(wl_client, wl_resource, int32_t): void
+    + set_buffer_scale(wl_client, wl_resource, int32_t): void
+    + damage_buffer(wl_client, wl_resource, int32_t, int32_t, int32_t, int32_t): void
 }
 
 struct wl_region_interface {
-    + destroy(client: wl_client, resource: wl_resource): void
-    + add(client: wl_client, resource: wl_resource, x: int32_t, y: int32_t, width: int32_t, height: int32_t): void
-    + subtract(client: wl_client, resource: wl_resource, x: int32_t, y: int32_t, width: int32_t, height: int32_t): void
+    + destroy(wl_client, wl_resource): void
+    + add(wl_client, wl_resource, int32_t, int32_t, int32_t, int32_t): void
+    + subtract(wl_client, wl_resource, int32_t, int32_t, int32_t, int32_t): void
 }
 
 struct wl_compositor_interface {
-    + create_surface(client: wl_client, resource: wl_resource, id: uint32_t): void
-    + create_region(client: wl_client, resource: wl_resource, id: uint32_t): void
+    + create_surface(wl_client, wl_resource, uint32_t): void
+    + create_region(wl_client, wl_resource, uint32_t): void
 }
 
 }
 
 object wayland_compositor {
     <b><color:Green>// wl_region_interface mapping
-    +region_destroy(region_resource: wl_resource*)
-    +region_add(region_resource: wl_resource*, x: int32_t, y: int32_t, w: int32_t, h: int32_t)
-    +region_subtract(region_resource: wl_resource*, x: int32_t, y: int32_t, w: int32_t, h: int32_t)
+    +region_destroy(wl_resource*)
+    +region_add(wl_resource*, int32_t, int32_t, int32_t, int32_t)
+    +region_subtract(wl_resource*, int32_t, int32_t, int32_t, int32_t)
 
     \n<b><color:Green>// wl_surface_interface mapping
-    +surface_destroy(surface: wl_resource*)
-    +surface_attach(surface: wl_resource*, buffer: wl_resource*, x: int32_t, y: int32_t)
-    +surface_damage(surface_resource: wl_resource*, x: int32_t, y: int32_t, w: int32_t, h: int32_t)
-    +surface_frame(surface: wl_resource*, uint32_t)
-    +surface_set_opaque_region(surface_resource: wl_resource*, region_resource: wl_resource*)
-    +surface_set_input_region(surface_resource: wl_resource*, region_resource: wl_resource*)
-    +surface_commit(surface_resource: wl_resource*)
-    +surface_set_buffer_transform(surface_resource: wl_resource*, transform: int32_t)
-    +surface_set_buffer_scale(surface_resource: wl_resource*, scale: int32_t)
-    +surface_damage_buffer(surface_resource: wl_resource*, x: int32_t, y: int32_t, w: int32_t, h: int32_t)
-    +surface_destroy_resource_callback(resource: wl_resource*)
+    +surface_destroy(wl_resource*)
+    +surface_attach(wl_resource*, wl_resource*, int32_t, int32_t)
+    +surface_damage(wl_resource*, int32_t, int32_t, int32_t, int32_t)
+    +surface_frame(wl_resource*, uint32_t)
+    +surface_set_opaque_region(wl_resource*, wl_resource*)
+    +surface_set_input_region(wl_resource*, wl_resource*)
+    +surface_commit(wl_resource*)
+    +surface_set_buffer_transform(wl_resource*, int32_t)
+    +surface_set_buffer_scale(wl_resource*, int32_t)
+    +surface_damage_buffer(wl_resource*, int32_t, int32_t, int32_t, int32_t)
+    +surface_destroy_resource_callback(wl_resource*)
 
     \n<b><color:Green>// wl_compositor_interface mapping
-    +compositor_create_surface(client: wl_client*, compositor: wl_resource*, id: uint32_t)
-    +compositor_create_region(client: wl_client*, compositor: wl_resource*, id: uint32_t)
-    +compositor_destroy_resource_callback(resource: wl_resource*)
+    +compositor_create_surface(wl_client*, wl_resource*, uint32_t)
+    +compositor_create_region(wl_client*, wl_resource*, uint32_t)
+    +compositor_destroy_resource_callback(wl_resource*)
 
     \n<b><color:Green>// wayland_compositor.h
-    +bind_compositor(client: wl_client*, data: void*, version: uint32_t, id: uint32_t)
-    +BindCompositorInterface(display: wl_display*, surfaces: Surfaces*)
+    +bind_compositor(wl_client*, void*, uint32_t, uint32_t)
+    +BindCompositorInterface(wl_display*, Surfaces*)
 
 }
 
@@ -66,6 +65,4 @@ wl_region_interface --|> wayland_compositor
 wayland_compositor *-- Surface : calls as wl_surface_interface >
 wayland_compositor *-- Region: calls as wl_region_interface >
 
-
 @enduml
-

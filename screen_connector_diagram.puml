@@ -3,8 +3,8 @@
 class WaylandScreenConnector {
   -server_: WaylandServer*
   +WaylandScreenConnector(ANNOTATED(FramesFd, int) frames_fd)
-  +SetFrameCallback(GenerateProcessedFrameCallbackImpl frame_callback)
-  +SetDisplayEventCallback(DisplayEventCallback event_callback)
+  +SetFrameCallback(frame_callback: GenerateProcessedFrameCallbackImpl)
+  +SetDisplayEventCallback(event_callback: DisplayEventCallback)
 }
 
 class WaylandServer {
@@ -22,12 +22,12 @@ class ScreenConnector<ProcessedFrameType> {
   -callback_from_streamer_: GenerateProcessedFrameCallback
   -streamer_callback_mutex_: std::mutex
   -streamer_callback_set_cv_: std::condition_variable
-  +ScreenConnector(WaylandScreenConnector& sc_android_src, HostModeCtrl& host_mode_ctrl)
-  +SetCallback(GenerateProcessedFrameCallback&& frame_callback)
+  +ScreenConnector(WaylandScreenConnector&, HostModeCtrl&)
+  +SetCallback(frame_callback: GenerateProcessedFrameCallback&&)
   +IsCallbackSet() const
-  +SetDisplayEventCallback(DisplayEventCallback event_callback)
+  +SetDisplayEventCallback(event_callback: DisplayEventCallback)
   +OnNextFrame()
-  +RenderConfirmationUi(...)
+  +RenderConfirmationUi(uint32_t, uint32_t, uint32_t, uint32_t,std::uint8_t*)
 }
 
 class ScreenConnectorInputMultiplexer<ProcessedFrameType> {
