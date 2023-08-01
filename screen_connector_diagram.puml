@@ -41,10 +41,6 @@ class ScreenConnectorInputMultiplexer<ProcessedFrameType> {
   + Pop(): ProcessedFrameType
 }
 
-
-ScreenConnector ..|> ScreenConnectorInfo
-ScreenConnector ..|> ScreenConnectorFrameRenderer
-
 ScreenConnector *-- ScreenConnectorInputMultiplexer : referred as FrameMultiplexer >
 
 ScreenConnector *-- WaylandScreenConnector : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >

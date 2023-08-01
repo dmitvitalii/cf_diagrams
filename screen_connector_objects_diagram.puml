@@ -35,6 +35,9 @@ class ScreenConnectorQueue<ProcessedFrameType> {
   + Pop(): T
 }
 
+ScreenConnector ..|> ScreenConnectorInfo
+ScreenConnector ..|> ScreenConnectorFrameRenderer
+
 ScreenConnectorInputMultiplexer o-- ScreenConnectorQueue : as Queue
 
 @enduml
