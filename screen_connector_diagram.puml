@@ -38,7 +38,8 @@ class WaylandScreenConnector {
 
 ScreenConnector *-- ScreenConnectorInputMultiplexer : referred as FrameMultiplexer >
 ScreenConnector *-- WaylandScreenConnector : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
-ScreenConnector -- DisplayHandler
+
+DisplayHandler *-- ScreenConnector : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
 
 WaylandScreenConnector *-- WaylandServer : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
 
