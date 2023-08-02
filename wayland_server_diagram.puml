@@ -64,8 +64,9 @@ class WaylandServerState {
 WaylandScreenConnector *-- WaylandServer : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
 
 WaylandServer o-- WaylandServerState : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
-WaylandServerState ..> Surfaces : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
+WaylandServer --> wayland_compositor : ServerLoop calls BindCompositorInterface
 
+WaylandServerState ..> Surfaces : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
 WaylandServerState ..> wl_display
 
 Surfaces "1" o-- "0..1" FrameCallback
