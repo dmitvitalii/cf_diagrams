@@ -61,37 +61,37 @@ class Streamer {
 
 
 class Streamer::Impl {
-  +CreateClientHandler(<color:LightSlateGray>int</color>): std::shared_ptr<ClientHandler>
-  +Register(<color:LightSlateGray>std::weak_ptr<OperatorObserver></color>): void
-  +SendMessageToClient(<color:LightSlateGray>int, const Json::Value&</color>): void
-  +DestroyClientHandler(<color:LightSlateGray>int</color>): void
-  +SetupCameraForClient(<color:LightSlateGray>int</color>): void
-  +OnOpen(): void
-  +OnClose(): void
-  +OnError(<color:LightSlateGray>const std::string&</color>): void
-  +OnReceive(<color:LightSlateGray>const uint8_t*, size_t, bool</color>): void
-  +HandleConfigMessage(<color:LightSlateGray>const Json::Value&</color>): void
-  +HandleClientMessage(<color:LightSlateGray>const Json::Value&</color>): void
-  +Build(<color:LightSlateGray>webrtc::PeerConnectionObserver&, const std::vector<webrtc::PeerConnectionInterface::IceServer>&</color>): Result<rtc::scoped_refptr<webrtc::PeerConnectionInterface>>
-  - config_: StreamerConfig
-  - operator_config_: OperatorServerConfig
-  - server_connection_: std::unique_ptr<ServerConnection>
-  - connection_observer_factory_: std::shared_ptr<ConnectionObserverFactory>
-  - peer_connection_factory_: rtc::scoped_refptr<webrtc::PeerConnectionFactoryInterface>
-  - network_thread_: std::unique_ptr<rtc::Thread>
-  - worker_thread_: std::unique_ptr<rtc::Thread>
-  - signal_thread_: std::unique_ptr<rtc::Thread>
-  - displays_: std::map<std::string, DisplayDescriptor>
-  - audio_sources_: std::map<std::string, rtc::scoped_refptr<AudioTrackSourceImpl>>
-  - clients_: std::map<int, std::shared_ptr<ClientHandler>>
-  - operator_observer_: std::weak_ptr<OperatorObserver>
-  - hardware_: std::map<std::string, std::string>
-  - custom_control_panel_buttons_: std::vector<ControlPanelButtonDescriptor>
-  - audio_device_module_: std::shared_ptr<AudioDeviceModuleWrapper>
-  - camera_streamer_: std::unique_ptr<CameraStreamer>
-  - registration_retries_left_: int
-  - retry_interval_ms_: int
-  - recorder_: LocalRecorder*
+  ' +CreateClientHandler(<color:LightSlateGray>int</color>): std::shared_ptr<ClientHandler>
+  ' +Register(<color:LightSlateGray>std::weak_ptr<OperatorObserver></color>): void
+  ' +SendMessageToClient(<color:LightSlateGray>int, const Json::Value&</color>): void
+  ' +DestroyClientHandler(<color:LightSlateGray>int</color>): void
+  ' +SetupCameraForClient(<color:LightSlateGray>int</color>): void
+  ' +OnOpen(): void
+  ' +OnClose(): void
+  ' +OnError(<color:LightSlateGray>const std::string&</color>): void
+  ' +OnReceive(<color:LightSlateGray>const uint8_t*, size_t, bool</color>): void
+  ' +HandleConfigMessage(<color:LightSlateGray>const Json::Value&</color>): void
+  ' +HandleClientMessage(<color:LightSlateGray>const Json::Value&</color>): void
+  ' +Build(<color:LightSlateGray>webrtc::PeerConnectionObserver&, const std::vector<webrtc::PeerConnectionInterface::IceServer>&</color>): Result<rtc::scoped_refptr<webrtc::PeerConnectionInterface>>
+  ' - config_: StreamerConfig
+  ' - operator_config_: OperatorServerConfig
+  ' - server_connection_: std::unique_ptr<ServerConnection>
+  ' - connection_observer_factory_: std::shared_ptr<ConnectionObserverFactory>
+  ' - peer_connection_factory_: rtc::scoped_refptr<webrtc::PeerConnectionFactoryInterface>
+  ' - network_thread_: std::unique_ptr<rtc::Thread>
+  ' - worker_thread_: std::unique_ptr<rtc::Thread>
+  ' - signal_thread_: std::unique_ptr<rtc::Thread>
+  ' - displays_: std::map<std::string, DisplayDescriptor>
+  ' - audio_sources_: std::map<std::string, rtc::scoped_refptr<AudioTrackSourceImpl>>
+  ' - clients_: std::map<int, std::shared_ptr<ClientHandler>>
+  ' - operator_observer_: std::weak_ptr<OperatorObserver>
+  ' - hardware_: std::map<std::string, std::string>
+  ' - custom_control_panel_buttons_: std::vector<ControlPanelButtonDescriptor>
+  ' - audio_device_module_: std::shared_ptr<AudioDeviceModuleWrapper>
+  ' - camera_streamer_: std::unique_ptr<CameraStreamer>
+  ' - registration_retries_left_: int
+  ' - retry_interval_ms_: int
+  ' - recorder_: LocalRecorder*
 }
 
 

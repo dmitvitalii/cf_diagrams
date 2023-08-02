@@ -29,9 +29,17 @@ class ScreenConnectorInputMultiplexer<ProcessedFrameType> {
 }
 note top of ScreenConnectorInputMultiplexer: Combines Android and ConfUI frames\nto Stream everything to a user as a single picture
 
-ScreenConnector *-- ScreenConnectorInputMultiplexer : referred as FrameMultiplexer >
+class WaylandScreenConnector {
+  -server_: WaylandServer*
+  +WaylandScreenConnector(<color:LightSlateGray>ANNOTATED(FramesFd, int) frames_fd</color>)
+  +SetFrameCallback(<color:LightSlateGray>frame_callback: GenerateProcessedFrameCallbackImpl</color>)
+  +SetDisplayEventCallback(<color:LightSlateGray>event_callback: DisplayEventCallback</color>)
+}
 
+ScreenConnector *-- ScreenConnectorInputMultiplexer : referred as FrameMultiplexer >
 ScreenConnector *-- WaylandScreenConnector : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
+ScreenConnector -- DisplayHandler
+
+WaylandScreenConnector *-- WaylandServer : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
 
 @enduml
-

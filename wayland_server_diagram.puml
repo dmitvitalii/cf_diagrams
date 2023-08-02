@@ -14,13 +14,6 @@ class Surfaces {
   - HandleSurfaceDestroyed(<color:LightSlateGray>...</color>)
 }
 
-class WaylandScreenConnector {
-  -server_: WaylandServer*
-  +WaylandScreenConnector(<color:LightSlateGray>ANNOTATED(FramesFd, int) frames_fd</color>)
-  +SetFrameCallback(<color:LightSlateGray>frame_callback: GenerateProcessedFrameCallbackImpl</color>)
-  +SetDisplayEventCallback(<color:LightSlateGray>event_callback: DisplayEventCallback</color>)
-}
-
 class WaylandServer {
   -server_ready_: bool
   -server_ready_mutex_: std::mutex
@@ -59,9 +52,6 @@ class WaylandServerState {
   +display_: wl_display
   +surfaces_: Surfaces
 }
-
-
-WaylandScreenConnector *-- WaylandServer : sets GenerateProcessedFrameCallbackImpl\nand DisplayEventCallback >
 
 WaylandServer o-- WaylandServerState : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
 WaylandServer --> wayland_compositor : ServerLoop calls BindCompositorInterface
