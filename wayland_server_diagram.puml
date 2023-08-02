@@ -59,9 +59,8 @@ WaylandServer --> wayland_compositor : ServerLoop calls BindCompositorInterface
 WaylandServerState ..> Surfaces : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
 WaylandServerState ..> wl_display
 
-Surfaces "1" o-- "0..1" FrameCallback
-Surfaces "1" o-- "0..1" DisplayEventCallback
-
+Surfaces "1" o-- "0..1" FrameCallback : called by HandleSurfaceFrame >
+Surfaces "1" o-- "0..1" DisplayEventCallback : called by HandleSurfaceCreated and HandleSurfaceDestroyed >
 
 DisplayEventCallback -- DisplayCreatedEvent 
 DisplayEventCallback -- DisplayDestroyedEvent
