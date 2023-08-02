@@ -21,10 +21,6 @@ class Region {
   + h: int32_t
 }
 
-class VirtioGpuMetadata {
-  + scanout_id: std::optional<uint32_t>
-}
-
 class State {
   + current_frame_number: uint32_t
   + current_buffer: struct wl_resource*
@@ -34,17 +30,13 @@ class State {
   + has_notified_surface_create: bool
 }
 
-
 Surface ..> Surfaces : HandleSurfaceFrame\nHandleSurfaceCreated\nHandleSurfaceDestroyed >
 Surface o-- State
 
 State o-- Region
-State o-- VirtioGpuMetadata
 
 Surface +-- Region
-Surface +-- VirtioGpuMetadata
 Surface +-- State
-
 
 @enduml
 
