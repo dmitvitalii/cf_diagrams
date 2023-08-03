@@ -1,0 +1,13 @@
+@startuml
+
+"webrtc/main.cpp" -> DisplayHandler: Loop()
+DisplayHandler -> ScreenConnector : OnNextFrame()
+ScreenConnector -> ScreenConnectorInputMultiplexer: Pop()
+ScreenConnectorInputMultiplexer -> ScreenConnector :  WebRtcScProcessedFrame 
+ScreenConnector -> DisplayHandler:  WebRtcScProcessedFrame 
+
+DisplayHandler -> DisplayHandler: move CvdVideoFrameBuffer\nfrom WebRtcScProcessedFrame
+
+DisplayHandler -> "Streamer's VideoSink"
+
+@enduml
