@@ -1,0 +1,6 @@
+@startuml
+
+!include streaming_shorter_diagram.puml
+!include screen_connector_diagram.puml
+
+@enduml
