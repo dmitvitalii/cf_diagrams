@@ -30,6 +30,24 @@ class State {
   + has_notified_surface_create: bool
 }
 
+class Surfaces {
+  + Surfaces()
+  + SetFrameCallback(<color:LightSlateGray>callback: FrameCallback</color>)
+  + SetDisplayEventCallback(<color:LightSlateGray>callback: DisplayEventCallback</color>)
+
+  - callback_mutex_: std::mutex
+  - callback_: std::optional<FrameCallback>
+  - event_callback_: std::optional<DisplayEventCallback>
+
+  - HandleSurfaceFrame(<color:LightSlateGray>...</color>)
+  - HandleSurfaceCreated(<color:LightSlateGray>...</color>)
+  - HandleSurfaceDestroyed(<color:LightSlateGray>...</color>)
+}
+
+WaylandServerState ..> Surfaces : sets GenerateProcessedFrameCallbackImpl (a.k.a. FrameCallback)\nand DisplayEventCallback >
+Surfaces "1" o-- "0..1" FrameCallback : called by HandleSurfaceFrame >
+Surfaces "1" o-- "0..1" DisplayEventCallback : called by HandleSurfaceCreated and HandleSurfaceDestroyed >
+
 Surface ..> Surfaces : HandleSurfaceFrame\nHandleSurfaceCreated\nHandleSurfaceDestroyed >
 Surface o-- State
 

@@ -1,0 +1,26 @@
+
+@startuml
+
+stereotype FrameCallback {
+  +operator()(<color:LightSlateGray>std::uint32_t, std::uint32_t, std::uint32_t, std::uint32_t, std::uint8_t*</color>)
+}
+note top of FrameCallback: using FrameCallback = std::function<void(\n    display_number,\n    frame_width,\n    frame_height,\n    frame_stride_bytes,\n    frame_bytes\n)>;
+
+stereotype DisplayEventCallback<DisplayEvent = [DisplayCreatedEvent | DisplayDestroyedEvent] > {
+  +operator()(<color:LightSlateGray>event: const DisplayEvent&</color>)
+}
+ 
+struct DisplayCreatedEvent {
+  +display_number: std::uint32_t
+  +display_width: std::uint32_t
+  +display_height: std::uint32_t
+}
+
+struct DisplayDestroyedEvent {
+  +display_number: std::uint32_t
+}
+
+DisplayEventCallback -- DisplayCreatedEvent 
+DisplayEventCallback -- DisplayDestroyedEvent
+
+@enduml

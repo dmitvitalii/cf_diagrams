@@ -1,6 +1,7 @@
 @startuml
 
 !include wayland_server_diagram.puml
+!include callbacks_diagram.puml
 !include surfaces_diagram.puml
 !include screen_connector_diagram.puml
 !include wayland_compositor.puml
